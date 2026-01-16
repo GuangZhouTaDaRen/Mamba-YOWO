@@ -1,0 +1,132 @@
+BACKBONE2D:
+  YOLOv8:
+    ver : mamba-n
+
+    PRETRAIN:
+     mamba-n : null
+
+BACKBONE3D:
+
+  MOBILENET:
+    width_mult: 2.0
+
+    PRETRAIN:
+      width_mult_0.5x  : null
+      width_mult_1.0x  : null
+      width_mult_1.5x  : null
+      width_mult_2.0x  : null
+
+  MOBILENETv2:
+    width_mult: 1.0
+
+    PRETRAIN:
+      width_mult_0.2x  : null
+      width_mult_0.45x : null
+      width_mult_0.7x  : null
+      width_mult_1.0x  : null
+
+  SHUFFLENET:
+    width_mult: 2.0
+
+    PRETRAIN:
+      width_mult_0.5x  : null
+      width_mult_1.0x  : null
+      width_mult_1.5x  : null
+      width_mult_2.0x  : null
+
+  SHUFFLENETv2:
+    width_mult: 2.0
+
+    PRETRAIN:
+      width_mult_0.25x : null
+      width_mult_1.0x  : null
+      width_mult_1.5x  : null
+      width_mult_2.0x  : null
+
+  I3D:
+    PRETRAIN:
+      default: null
+
+  RESNET:
+    ver : 101
+
+    PRETRAIN:
+      ver_18 : null
+      ver_50 : null
+      ver_101: null
+
+  RESNEXT:
+    ver : 101
+
+    PRETRAIN:
+      ver_101 : null
+
+LOSS:
+  TAL:
+    top_k  : 10
+    alpha  : 0.5
+    beta   : 6.0
+    radius : 2.5
+    soft_label : False
+
+    scale_cls_loss : 0.5
+    scale_box_loss : 7.5
+    scale_dfl_loss : 1.5
+
+  SIMOTA:
+    top_k  : 10
+    gamma  : 0.5
+    radius : 2.5
+    mode   : balance
+    soft_label : True
+
+    dynamic_k     : False
+    dynamic_top_k : 40
+
+    scale_cls_loss : 0.5
+    scale_box_loss : 7.5
+    scale_dfl_loss : 1.5
+
+  NORMAL:
+    top_k  : 10
+    radius : 2.5
+
+    dynamic_k     : True
+    dynamic_top_k : 10
+
+    scale_cls_loss : 1.0
+    scale_box_loss : 5.0
+    scale_dfl_loss : 1.0
+
+config_path       : config/cf/ucf_mamba.yaml
+dataset           : ucf
+loss              : normal
+active_checker    : True
+num_classes       : 4
+backbone2D        : yolov8
+backbone3D        : shufflenetv2
+fusion_module     : Channel
+mode              : decoupled
+interchannels     : [64, 64, 64]
+pretrain_path     : null
+data_root         : /data/CuiTengPeng/YOWOv3/cus_datasets/ucf24
+img_size          : 512
+clip_length       : 16
+batch_size        : 8
+num_workers       : 8
+acc_grad          : 16
+lr                : 0.001
+weight_decay      : 0.0005
+max_step_warmup   : 1000
+adjustlr_schedule : [6,7,8]
+max_epoch         : 10
+lr_decay          : 0.5
+save_folder       : /data/CuiTengPeng/YOWOv3/weights/fig/ucf/mambaOut_shufflenetv2+Channel_normal
+sampling_rate     : 1
+
+
+idx2name:
+  0  : creeping
+  1  : feeding
+  2  : flying
+  3  : mating
